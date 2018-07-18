@@ -5,7 +5,7 @@ projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOC
 
 pipeline{
     agent any
-    stages(
+    stages{
         stage ('Test'){
             steps{
                 script{
