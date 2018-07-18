@@ -18,7 +18,7 @@ pipeline{
                 script{
                     executeBuild(projectList)
                 }
-
+            }
         }
     }
 }
