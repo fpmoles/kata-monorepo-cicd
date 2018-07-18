@@ -1,10 +1,19 @@
 def projectList = []
-projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOCKER)
-projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER)
-projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER)
 
 pipeline{
     agent any
+    stage ('Prepare'){
+        steps{
+            echo 'Defining Project List'
+
+            script{
+                projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOCKER)
+                projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER)
+                projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER)
+            }
+        }
+
+    }
     stage ('Test'){
         executeTests(projectList)
     }
