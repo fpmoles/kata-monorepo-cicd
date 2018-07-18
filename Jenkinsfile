@@ -9,14 +9,38 @@ pipeline{
         stage ('Test'){
             steps{
                 script{
-                    executeTests(projectList)
+                    for(int i=0;i<projectList.size();i++){
+                        switch(projectList[i].projectType){
+                            case GOLANG:
+                                println "GOLANG: " + projectList[i].name
+                                break
+                            case JAVASCRIPT:
+                                println "JAVASCRIPT: " + projectList[i].name
+                                break
+                            case JAVA:
+                                println "JAVA: " + projectList[i].name
+                                break
+                            case STATIC:
+                                println "STATIC: " + projectList[i].name
+                                break
+                        }
+                    }
                 }
             }
         }
         stage('Build'){
             steps{
                 script{
-                    executeBuild(projectList)
+                    for(int i=0;i<projectList.size();i++){
+                        switch(projectList[i].buildType){
+                            case SHELL:
+                                println "SHELL: " + projectList[i].name
+                                break
+                            case DOCKER:
+                                println "DOCKER: " + projectList[i].name
+                                break
+                        }
+                    }
                 }
             }
         }
@@ -45,36 +69,4 @@ enum ProjectType{
 
 enum BuildType{
     SHELL, DOCKER
-}
-
-void executeTests(ProjectDescriptor[] projects){
-    projects.each{ project->
-        switch(project.projectType){
-            case GOLANG:
-                println "GOLANG: " + project.name
-                break
-            case JAVASCRIPT:
-                println "JAVASCRIPT: " + project.name
-                break
-            case JAVA:
-                println "JAVA: " + project.name
-                break
-            case STATIC:
-                println "STATIC: " + project.name
-                break
-        }
-    }
-}
-
-void executeBuild(ProjectDescriptor[] projects){
-    projects.each{ project->
-        switch(project.buildType){
-            case SHELL:
-                println "SHELL: " + project.name
-                break
-            case DOCKER:
-                println "DOCKER: " + project.name
-                break
-        }
-    }
 }
