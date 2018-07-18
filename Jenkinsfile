@@ -6,9 +6,9 @@ pipeline{
 
             script{
                 def projectList = []
-                projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOCKER)
-                projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER)
-                projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER)
+                projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOCKER))
+                projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER))
+                projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER))
             }
         }
 
