@@ -1,28 +1,27 @@
+def projectList = []
+projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOCKER))
+projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER))
+projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER))
+
 pipeline{
     agent any
     stages(
-        stage ('Prepare'){
+        stage ('Test'){
             steps{
-                echo 'Defining Project List'
-
                 script{
-                    def projectList = []
-                    projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOCKER))
-                    projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER))
-                    projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER))
+                    executeTests(projectList)
                 }
             }
-
-        }
-        stage ('Test'){
-            executeTests(projectList)
         }
         stage('Build'){
-            executeBuild(projectList)
+            steps{
+                script{
+                    executeBuild(projectList)
+                }
+
         }
     }
 }
-
 
 def executeTests(ProjectDescriptor[] projects){
     projects.each{ project->
