@@ -23,6 +23,7 @@ pipeline{
     }
 }
 
+@NonCPS
 def executeTests(ProjectDescriptor[] projects){
     projects.each{ project->
         switch(project.projectType){
@@ -42,6 +43,7 @@ def executeTests(ProjectDescriptor[] projects){
     }
 }
 
+@NonCPS
 def executeBuild(ProjectDescriptor[] projects){
     projects.each{ project->
         switch(project.buildType){
