@@ -3,38 +3,6 @@ projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOC
 projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER))
 projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER))
 
-def executeTests(ProjectDescriptor[] projects){
-    projects.each{ project->
-        switch(project.projectType){
-            case GOLANG:
-                println "GOLANG: " + project.name
-                break
-            case JAVASCRIPT:
-                println "JAVASCRIPT: " + project.name
-                break
-            case JAVA:
-                println "JAVA: " + project.name
-                break
-            case STATIC:
-                println "STATIC: " + project.name
-                break
-        }
-    }
-}
-
-def executeBuild(ProjectDescriptor[] projects){
-    projects.each{ project->
-        switch(project.buildType){
-            case SHELL:
-                println "SHELL: " + project.name
-                break
-            case DOCKER:
-                println "DOCKER: " + project.name
-                break
-        }
-    }
-}
-
 pipeline{
     agent any
     stages{
@@ -54,6 +22,7 @@ pipeline{
         }
     }
 }
+
 
 class ProjectDescriptor{
     String name
@@ -76,4 +45,36 @@ enum ProjectType{
 
 enum BuildType{
     SHELL, DOCKER
+}
+
+void executeTests(ProjectDescriptor[] projects){
+    projects.each{ project->
+        switch(project.projectType){
+            case GOLANG:
+                println "GOLANG: " + project.name
+                break
+            case JAVASCRIPT:
+                println "JAVASCRIPT: " + project.name
+                break
+            case JAVA:
+                println "JAVA: " + project.name
+                break
+            case STATIC:
+                println "STATIC: " + project.name
+                break
+        }
+    }
+}
+
+void executeBuild(ProjectDescriptor[] projects){
+    projects.each{ project->
+        switch(project.buildType){
+            case SHELL:
+                println "SHELL: " + project.name
+                break
+            case DOCKER:
+                println "DOCKER: " + project.name
+                break
+        }
+    }
 }
