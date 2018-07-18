@@ -3,27 +3,6 @@ projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOC
 projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER))
 projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER))
 
-pipeline{
-    agent any
-    stages{
-        stage ('Test'){
-            steps{
-                script{
-                    executeTests(projectList)
-                }
-            }
-        }
-        stage('Build'){
-            steps{
-                script{
-                    executeBuild(projectList)
-                }
-            }
-        }
-    }
-}
-
-@NonCPS
 def executeTests(ProjectDescriptor[] projects){
     projects.each{ project->
         switch(project.projectType){
@@ -43,7 +22,6 @@ def executeTests(ProjectDescriptor[] projects){
     }
 }
 
-@NonCPS
 def executeBuild(ProjectDescriptor[] projects){
     projects.each{ project->
         switch(project.buildType){
@@ -53,6 +31,26 @@ def executeBuild(ProjectDescriptor[] projects){
             case DOCKER:
                 println "DOCKER: " + project.name
                 break
+        }
+    }
+}
+
+pipeline{
+    agent any
+    stages{
+        stage ('Test'){
+            steps{
+                script{
+                    executeTests(projectList)
+                }
+            }
+        }
+        stage('Build'){
+            steps{
+                script{
+                    executeBuild(projectList)
+                }
+            }
         }
     }
 }
