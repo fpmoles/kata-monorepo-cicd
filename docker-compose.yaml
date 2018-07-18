@@ -1,0 +1,14 @@
+version: '3'
+services:
+  alpha:
+    build: ./alpha
+    ports:
+    - "8000:8000"
+  beta:
+    build: ./beta
+    ports:
+    - "8001:8001"
+  gamma:
+    build: ./gamma
+    ports:
+    - "8002:8002"
