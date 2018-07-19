@@ -24,7 +24,7 @@ try{
 
 Project[] getProjects(){
     node{
-        rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print $9}\'")
+        rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
         echo rawResults
         results[]=rawResults.split("\n").trim()
         return results;
