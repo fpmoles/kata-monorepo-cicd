@@ -43,7 +43,6 @@ List getProjects(){
         return proj
 }
 
-@ToString
 class Project{
     String name
     boolean needsBuild
