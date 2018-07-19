@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def List projects
+def projects = []
 
 try{
 
@@ -34,13 +34,13 @@ List getProjects(){
         rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
         echo "Raw Results: ${rawResults}"
         List results=rawResults.split("\n")
-        List projects = new ArrayList<Project>
+        proj = []
         for(String result in results){
             Project project = new Project(result);
             println project
-            projects.add(project)
+            proj.add(project)
         }
-        return projects
+        return proj
 }
 
 @ToString
