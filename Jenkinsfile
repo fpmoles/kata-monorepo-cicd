@@ -3,26 +3,20 @@
 def projects = []
 
 try{
+    node{
     stage('Checkout'){
-        node{
-            def scmVars = checkout scm
-            stash
-        }
+
+        def scmVars = checkout scm
     }
     stage('Collect Details'){
-        node{
-            unstash
-            projects = getProjects()
-            stash
-        }
+        projects = getProjects()
     }
     stage('Test Artifacts'){
-        node{
-            unstash
-            for(Project project in projects){
-                result = testArtifact(project)
-            }
-            stash
+
+        status = true
+        for(Project project in projects){
+            result = testArtifact(project)
+            status == status && result
         }
     }
     stage('Build Artifacts'){
@@ -56,6 +50,7 @@ boolean testProject(Project project){
     sh "cd ${project.name}"
     project.testsPass = sh (returnStdout: true, script: bin/test.sh)
     sh "cd .."
+    return project.testsPass
 }
 
 class Project{
