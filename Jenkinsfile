@@ -16,7 +16,7 @@ try{
         status = true
         for(Project project in projects){
             result = testArtifact(project)
-            status == status && result
+            status = status && result
         }
     }
     stage('Build Artifacts'){
