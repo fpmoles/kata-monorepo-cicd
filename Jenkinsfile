@@ -49,7 +49,7 @@ List getProjects(){
 }
 
 boolean testProject(Project project){
-    project.testsPass = sh (returnStdout: true, script: "cd ${project.name} && bin/test.sh")
+    project.testsPass = sh (returnStdout: true, script: "cd ${project.name} && bash bin/test.sh")
     return project.testsPass
 }
 
