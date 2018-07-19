@@ -37,7 +37,7 @@ List getProjects(){
         proj = []
         for(String result in results){
             Project project = new Project(result);
-            println project
+            println project.toString()
             proj.add(project)
         }
         return proj
@@ -50,5 +50,13 @@ class Project{
 
     Project(name){
         this.name = name
+    }
+
+    String toString(){
+        String result = "[Project: {"
+        result = result + "name=" + name;
+        result = result + ", needsBuild=" + needsBuild
+        result = result + ", testsPass=" + testsPass
+        result = result + "}]"
     }
 }
