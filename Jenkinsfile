@@ -15,7 +15,7 @@ try{
 
             status = true
             for(Project project in projects){
-                result = testArtifact(project)
+                result = testProject(project)
                 status = status && result
             }
         }
