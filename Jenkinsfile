@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def String[] projects
+def List projects
 
 try{
 
@@ -29,17 +29,21 @@ try{
 }
 
 
-Project[] getProjects(){
+List getProjects(){
         sh "ls -l"
         rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
         echo "Raw Results: ${rawResults}"
         List results=rawResults.split("\n")
+        List projects = new ArrayList<Project>
         for(String result in results){
-            echo "Results value for : ${result}"
+            Project project = new Project(result);
+            println project
+            projects.add(project)
         }
-        return results;
+        return projects
 }
 
+@ToString
 class Project{
     String name
     boolean needsBuild
