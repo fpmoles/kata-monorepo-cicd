@@ -33,11 +33,9 @@ Project[] getProjects(){
         sh "ls -l"
         rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
         echo "Raw Results: ${rawResults}"
-        results[]=rawResults.split("\n").trim()
-        for(int i=0;i<results.size();i++){
-
-            result = results[i]
-            echo "Results value for ${i}: ${result}"
+        List results=rawResults.split("\n")
+        for(String result in results{
+            echo "Results value for : ${result}"
         }
         return results;
 }
