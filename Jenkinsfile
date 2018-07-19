@@ -17,6 +17,7 @@ try{
             for(Project project in projects){
                 result = testProject(project)
                 status = status && result
+                println project.toString()
             }
         }
         stage('Build Artifacts'){
@@ -48,9 +49,7 @@ List getProjects(){
 }
 
 boolean testProject(Project project){
-    sh "cd ${project.name}"
-    project.testsPass = sh (returnStdout: true, script: bin/test.sh)
-    sh "cd .."
+    project.testsPass = sh (returnStdout: true, script: cd ${project.name} && bin/test.sh)
     return project.testsPass
 }
 
