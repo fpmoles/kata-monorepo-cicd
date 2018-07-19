@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def projects[]
+def String[] projects
 
 try{
     stage('Collect Details'){
