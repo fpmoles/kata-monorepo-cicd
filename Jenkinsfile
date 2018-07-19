@@ -34,7 +34,7 @@ Project[] getProjects(){
         rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
         echo "Raw Results: ${rawResults}"
         List results=rawResults.split("\n")
-        for(String result in results{
+        for(String result in results){
             echo "Results value for : ${result}"
         }
         return results;
