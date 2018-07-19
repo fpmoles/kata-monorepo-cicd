@@ -1,72 +1,42 @@
-def projectList = []
-projectList.add(new ProjectDescriptor("alpha", ProjectType.GOLANG, BuildType.DOCKER))
-projectList.add(new ProjectDescriptor("beta", ProjectType.GOLANG, BuildType.DOCKER))
-projectList.add(new ProjectDescriptor("gamma", ProjectType.GOLANG, BuildType.DOCKER))
+#!/usr/bin/env groovy
 
-pipeline{
-    agent any
-    stages{
-        stage ('Test'){
-            steps{
-                script{
-                    for(int i=0;i<projectList.size();i++){
-                        switch(projectList[i].projectType){
-                            case GOLANG:
-                                println "GOLANG: " + projectList[i].name
-                                break
-                            case JAVASCRIPT:
-                                println "JAVASCRIPT: " + projectList[i].name
-                                break
-                            case JAVA:
-                                println "JAVA: " + projectList[i].name
-                                break
-                            case STATIC:
-                                println "STATIC: " + projectList[i].name
-                                break
-                        }
-                    }
-                }
-            }
-        }
-        stage('Build'){
-            steps{
-                script{
-                    for(int i=0;i<projectList.size();i++){
-                        switch(projectList[i].buildType){
-                            case SHELL:
-                                println "SHELL: " + projectList[i].name
-                                break
-                            case DOCKER:
-                                println "DOCKER: " + projectList[i].name
-                                break
-                        }
-                    }
-                }
-            }
-        }
+def projects[]
+
+try{
+    stage('Collect Details'){
+        projects = getProjects()
     }
+    stage('Test Artifacts'){
+
+    }
+    stage('Build Artifacts'){
+
+    }
+    stage('Deploy Artifacts'){
+
+    }
+}catch (exc){
+
+}finally{
+
 }
 
 
-class ProjectDescriptor{
+Project[] getProjects(){
+    node{
+        rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print $9}\'")
+        echo rawResults
+        results[]=rawResults.split("\n").trim()
+        return results;
+    }
+}
+
+class Project{
     String name
-    ProjectType projectType
-    BuildType buildType
-    boolean passedTests
-    boolean built
+    boolean needsBuild
+    boolean testsPass
 
-    ProjectDescriptor(name, projectType, buildType){
+    Project(name){
         this.name = name
-        this.projectType = projectType
-        this.buildType = buildType
     }
-
-}
-
-enum ProjectType{
-    GOLANG, JAVASCRIPT, JAVA, STATIC
-}
-
-enum BuildType{
-    SHELL, DOCKER
 }
