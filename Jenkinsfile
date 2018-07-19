@@ -58,5 +58,6 @@ class Project{
         result = result + ", needsBuild=" + needsBuild
         result = result + ", testsPass=" + testsPass
         result = result + "}]"
+        return result
     }
 }
