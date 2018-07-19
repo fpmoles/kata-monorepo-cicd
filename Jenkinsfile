@@ -4,26 +4,27 @@ def projects = []
 
 try{
     node{
-    stage('Checkout'){
+        stage('Checkout'){
 
-        def scmVars = checkout scm
-    }
-    stage('Collect Details'){
-        projects = getProjects()
-    }
-    stage('Test Artifacts'){
-
-        status = true
-        for(Project project in projects){
-            result = testArtifact(project)
-            status = status && result
+            def scmVars = checkout scm
         }
-    }
-    stage('Build Artifacts'){
+        stage('Collect Details'){
+            projects = getProjects()
+        }
+        stage('Test Artifacts'){
 
-    }
-    stage('Deploy Artifacts'){
+            status = true
+            for(Project project in projects){
+                result = testArtifact(project)
+                status = status && result
+            }
+        }
+        stage('Build Artifacts'){
 
+        }
+        stage('Deploy Artifacts'){
+
+        }
     }
 }catch (exc){
 
