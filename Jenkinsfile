@@ -96,7 +96,7 @@ void executeTests(Project project){
 
 void buildProject(Project project, String branchName, String buildNumber){
     project.setTagValue(branchName, buildNumber)
-    String result = sh(returnStdout: true, script: "cd ${project.name} && bin/build.sh")
+    String result = sh(returnStdout: true, script: "cd ${project.name} && bin/build.sh ${project.name} ${project.tag}")
     project.buildVersion = result.trim()
 }
 
