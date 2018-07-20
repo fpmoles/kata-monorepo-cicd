@@ -8,7 +8,6 @@ pipeline{
                     def rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
                     println rawResults
                     projects = getProjects(rawResults)
-                    printProjects(projects, "Prepare")
                 }
             }
         }
@@ -18,15 +17,18 @@ pipeline{
             }
             steps{
                 script{
-                    parallel(executeTests(projects))
-                    printProjects(projects, "Test")
+                    for(Project project in projects){
+                        executeTests(project)
+                    }
                 }
             }
         }
         stage('Build'){
             steps{
                 script{
-                    printProjects(projects, "Build")
+                    for(Project project in projects){
+                        buildProject(project, ${env.BRANCH_NAME}, ${env.BUILD_NUMBER})
+                    }
                 }
             }
         }
@@ -37,10 +39,22 @@ pipeline{
 class Project{
     String name
     boolean testStatus
+    String tag
 
 
     Project(String name){
         this.name = name
+    }
+
+    void setTagValue(String branchName, String buildNumber){
+        if(branchName.equals('master')){
+            this.tag = "release." + buildNumber
+        }else if(branchName.contains('integration'){
+            this.tag = "integration." + buildNumber
+        }else{
+            String newName = branchName.split("_")[0]
+            this.tag="feature." + newName + "." + buildNumber
+        }
     }
 
     @Override
@@ -64,23 +78,15 @@ Project[] getProjects(String rawResults){
     return results
 }
 
-void printProjects(List projects, String branch){
-    println "In branch: " + branch
-    for(Project project in projects){
-        println project.toString()
-    }
-}
-
-Map executeTests(List projects){
-    def projectMap=[:]
-    for(Project project in projects){
-        projectMap.put(project.name, executeTest(project))
-    }
-}
-
-void executeTest(Project project){
-    boolean result = sh(returnStdout: true, script: "cd ${project.name} && bin/test.sh")
+void executeTests(Project project){
+    String resultString = sh(returnStdout: true, script: "cd ${project.name} && bin/test.sh")
+    boolean result = resultString.toBoolean()
     project.testStatus = result
+}
+
+void buildProject(Project project, String branchName, String buildNumber){
+    project.setTagValue(branchName, buildNumber)
+    println project.toString()
 }
 
 
