@@ -49,7 +49,7 @@ class Project{
     void setTagValue(String branchName, String buildNumber){
         if(branchName.equals('master')){
             this.tag = "release." + buildNumber
-        }else if(branchName.contains('integration'){
+        }else if(branchName.contains('integration')){
             this.tag = "integration." + buildNumber
         }else{
             String newName = branchName.split("_")[0]
