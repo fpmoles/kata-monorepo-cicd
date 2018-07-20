@@ -47,4 +47,5 @@ Project[] getProjects(String rawResults){
     for(String project in tempProjects){
         results.add(new Project(project.trim())
     }
+    return results
 }
