@@ -53,7 +53,7 @@ Project[] getProjects(String rawResults){
 void printProjects(String branch){
     println "In branch: " + branch
     for(int i=0;i<projects.size();i++){
-        println(projects[i]
+        println(projects[i])
     }
 }
 
