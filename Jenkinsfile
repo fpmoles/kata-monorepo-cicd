@@ -5,7 +5,6 @@ pipeline{
             steps{
                 script{
                     def rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
-                    echo rawResults
                     projects = getProjects(rawResults)
                     printProjects("Prepare")
                 }
@@ -45,7 +44,7 @@ Project[] getProjects(String rawResults){
     def tempProjects = []
     tempProjects = rawResults.split("\n")
     for(int i=0; i<tempProjects.size();i++){
-        results.add(tempProjects[i].trim())
+        results.add(newProject(tempProjects[i].trim()))
     }
     return results
 }
