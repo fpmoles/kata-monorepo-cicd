@@ -27,9 +27,9 @@ pipeline{
             }
         }
         stage('Build'){
-            tools{
-                docker 'docker'
-            }
+            //tools{
+            //    docker 'docker'
+            //}
             steps{
                 script{
                     for(Project project in projects){
