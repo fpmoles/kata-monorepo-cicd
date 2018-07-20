@@ -44,7 +44,7 @@ Project[] getProjects(String rawResults){
     def tempProjects = []
     tempProjects = rawResults.split("\n")
     for(int i=0; i<tempProjects.size();i++){
-        results.add(newProject(tempProjects[i].trim()))
+        results.add(new Project(tempProjects[i].trim()))
     }
     return results
 }
