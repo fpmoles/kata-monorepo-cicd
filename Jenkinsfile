@@ -9,7 +9,7 @@ pipeline{
                 scm checkout
                 rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
                 tempProjects = rawResults.split("\n")
-                for(String project in tempProjects{
+                for(String project in tempProjects){
                     projects.add(new Project(project.trim())
                 }
                 echo rawResults
