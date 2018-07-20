@@ -1,8 +1,5 @@
 pipeline{
     agent any
-    environment{
-        def projects = []
-    }
     stages{
         stage('Prepare'){
             steps{
@@ -14,11 +11,10 @@ pipeline{
         }
         stage('Build'){
             steps{
-                step{
-                    echo "Here"
-                }
+                echo "Here"
             }
         }
     }
 }
 
+def projects = []
