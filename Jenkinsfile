@@ -76,7 +76,7 @@ Map executeTests(List projects){
 }
 
 void executeTest(Project project){
-    boolean result = sh "cd ${project.} && bin/test.sh"
+    boolean result = sh(returnStdout: true, script: "cd ${project.name} && bin/test.sh")
     project.testStatus = result
 }
 
