@@ -47,7 +47,7 @@ class Project{
     public String toString(){
         String result = "[Project: {"
         result = result + "name=" + this.name
-        result = result + " testStatus=" + this.testStatus
+        result = result + ", testStatus=" + this.testStatus
         result = result + "}]"
         return result
     }
