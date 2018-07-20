@@ -27,7 +27,7 @@ pipeline{
             steps{
                 script{
                     for(Project project in projects){
-                        buildProject(project, ${env.BRANCH_NAME}, ${env.BUILD_NUMBER})
+                        buildProject(project, "${env.BRANCH_NAME}", "${env.BUILD_NUMBER}")
                     }
                 }
             }
@@ -47,6 +47,7 @@ class Project{
     }
 
     void setTagValue(String branchName, String buildNumber){
+        println "In setTagValue"
         if(branchName.equals('master')){
             this.tag = "release." + buildNumber
         }else if(branchName.contains('integration')){
@@ -85,6 +86,7 @@ void executeTests(Project project){
 }
 
 void buildProject(Project project, String branchName, String buildNumber){
+    println "In build project"
     project.setTagValue(branchName, buildNumber)
     println project.toString()
 }
