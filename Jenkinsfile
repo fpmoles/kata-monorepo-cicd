@@ -13,6 +13,9 @@ pipeline{
             }
         }
         stage('Test'){
+            tools{
+                go 'go'
+            }
             steps{
                 script{
                     parallel(executeTests(projects))

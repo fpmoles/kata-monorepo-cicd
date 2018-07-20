@@ -3,8 +3,8 @@
 result=$(go test | grep 'PASS\|FAIL')
 if [ "$result" = "PASS" ]
 then
-    echo TRUE
+    echo true
 else
-    echo FALSE
+    echo false
 fi
 
