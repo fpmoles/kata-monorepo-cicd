@@ -63,6 +63,7 @@ class Project{
         String result = "[Project: {"
         result = result + "name=" + this.name
         result = result + ", testStatus=" + this.testStatus
+        result = result + ", tag=" + this.tag
         result = result + "}]"
         return result
     }
