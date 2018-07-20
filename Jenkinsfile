@@ -19,11 +19,17 @@ pipeline{
                 script{
                     for(Project project in projects){
                         executeTests(project)
+                        if(!project.testStatus){
+                            currentBuild.result = 'UNSTABLE'
+                        }
                     }
                 }
             }
         }
         stage('Build'){
+            tools{
+                docker 'docker'
+            }
             steps{
                 script{
                     for(Project project in projects){
@@ -40,6 +46,7 @@ class Project{
     String name
     boolean testStatus
     String tag
+    String buildVersion
 
 
     Project(String name){
@@ -64,6 +71,7 @@ class Project{
         result = result + "name=" + this.name
         result = result + ", testStatus=" + this.testStatus
         result = result + ", tag=" + this.tag
+        result = result + ", buildVersion=" + this.buildVersion
         result = result + "}]"
         return result
     }
@@ -87,9 +95,9 @@ void executeTests(Project project){
 }
 
 void buildProject(Project project, String branchName, String buildNumber){
-    println "In build project"
     project.setTagValue(branchName, buildNumber)
-    println project.toString()
+    String result = sh(returnStdout: true, script: "cd ${project.name} && bin/build.sh")
+    project.buildVersion = result.trim()
 }
 
 
