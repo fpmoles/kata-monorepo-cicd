@@ -5,7 +5,7 @@ pipeline{
         stage('Prepare'){
             steps{
                 script{
-                    def rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
+
                     println rawResults
                     projects = getProjects(rawResults)
                 }
@@ -79,12 +79,20 @@ class Project{
 
 }
 
-Project[] getProjects(String rawResults){
+Project[] getProjects(){
     def results = []
     def tempProjects = []
+    def tempResults = []
+    def rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
     tempProjects = rawResults.split("\n")
     for(String project in tempProjects){
-        results.add(new Project(project.trim()))
+        tempResults.add(new Project(project.trim()))
+    }
+    for(Project project in tempResults){
+        boolean exists = sh(returnStdOut: true, script: "if [ -f ${project}/Dockerfile ]; then echo true; else echo false; fi "
+        if(exists){
+            results.add(project)
+        }
     }
     return results
 }
