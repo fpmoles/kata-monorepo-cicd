@@ -83,12 +83,15 @@ Project[] getProjects(){
     def rawResults=sh(returnStdout: true, script: "ls -l | egrep \'^d\' | awk \'{print \$9}\'")
     tempProjects = rawResults.split("\n")
     for(String project in tempProjects){
+        println "Adding new project with name: " + project
         tempResults.add(new Project(project.trim()))
     }
     for(Project project in tempResults){
-        String found = sh(returnStdOut: true, script: "if [ -f ${project}/Dockerfile ]; then echo true; else echo false; fi ")
+        println "Testing project with name: " + project.name
+        String found = sh(returnStdOut: true, script: "if [ -f ${project.name}/Dockerfile ]; then echo true; else echo false; fi ")
         boolean exists = found.trim().toBoolean()
         if(exists){
+            println "Adding project with name: " + project.name
             results.add(project)
         }
     }
