@@ -89,7 +89,8 @@ Project[] getProjects(){
         tempResults.add(new Project(project.trim()))
     }
     for(Project project in tempResults){
-        boolean exists = sh(returnStdOut: true, script: "if [ -f ${project}/Dockerfile ]; then echo true; else echo false; fi "
+        String found = sh(returnStdOut: true, script: "if [ -f ${project}/Dockerfile ]; then echo true; else echo false; fi "
+        boolean exists = found.trim().toBoolean()
         if(exists){
             results.add(project)
         }
