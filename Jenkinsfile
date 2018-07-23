@@ -5,9 +5,7 @@ pipeline{
         stage('Prepare'){
             steps{
                 script{
-
-                    println rawResults
-                    projects = getProjects(rawResults)
+                    projects = getProjects()
                 }
             }
         }
@@ -34,7 +32,6 @@ pipeline{
                 script{
                     for(Project project in projects){
                         buildProject(project, "${env.BRANCH_NAME}", "${env.BUILD_NUMBER}")
-                        println project.toString()
                     }
                 }
             }
